@@ -2,7 +2,16 @@
 # the open-source pygame library
 # throughout this file
 import pygame
+import player
 from constants import *
+import asteroid
+
+updatable_group = pygame.sprite.Group()
+drawable_group = pygame.sprite.Group()
+asteroid_group = pygame.sprite.Group()
+
+player.Player.containers = (updatable_group, drawable_group)
+asteroid.Asteroid.containers = (asteroid_group, updatable_group, drawable_group)
 
 def main():
 
@@ -18,6 +27,8 @@ def main():
     fps_limit = pygame.time.Clock()
     dt = 0 
 
+    player1 = player.Player((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2)) 
+
     #game loop
     while True:
         for event in pygame.event.get():
@@ -25,6 +36,11 @@ def main():
                 return
     
         screen.fill("black")
+        for drawable in drawable_group:
+            drawable.draw(screen)
+
+        updatable_group.update(dt)
+
         pygame.display.flip()
         dt = fps_limit.tick(60)/1000
 
