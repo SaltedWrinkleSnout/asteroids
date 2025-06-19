@@ -10,10 +10,12 @@ import asteroidfield
 updatable_group = pygame.sprite.Group()
 drawable_group = pygame.sprite.Group()
 asteroid_group = pygame.sprite.Group()
+shot_group = pygame.sprite.Group()
 
 player.Player.containers = (updatable_group, drawable_group)
 asteroid.Asteroid.containers = (asteroid_group, updatable_group, drawable_group)
 asteroidfield.AsteroidField.containers = (updatable_group)
+player.Shot.containers = (shot_group, updatable_group, drawable_group)
 
 def main():
 
@@ -44,6 +46,14 @@ def main():
             drawable.draw(screen)
 
         updatable_group.update(dt)
+
+        #check to see if the player has collided with an asteroid
+        for bodies in asteroid_group:
+            #print("checking for collisions")
+            if player1.collide(bodies) :
+                print("Game Over!")
+                exit()
+
 
         pygame.display.flip()
         dt = fps_limit.tick(60)/1000
