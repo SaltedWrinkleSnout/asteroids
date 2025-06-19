@@ -53,6 +53,11 @@ def main():
             if player1.collide(bodies) :
                 print("Game Over!")
                 exit()
+            for bullet in shot_group:
+                if bullet.collide(bodies):
+                    bodies.split()
+                    bullet.kill()
+
 
 
         pygame.display.flip()
